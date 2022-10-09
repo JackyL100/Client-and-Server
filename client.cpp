@@ -143,6 +143,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << buf;
     */
+    close(sockfd);
     receivingThread.join();
     SDL_DestroyRenderer(renderTarget);
     SDL_DestroyTexture(texture);
@@ -154,7 +155,6 @@ int main(int argc, char* argv[]) {
     texture = nullptr;
     yourTexture = nullptr;
     otherTexture = nullptr;
-    close(sockfd);
     SDL_Quit();
     return EXIT_SUCCESS;
 }
