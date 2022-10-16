@@ -11,28 +11,6 @@
 //#include "client.hpp"
 #include "functionalClient.hpp"
 
-int setup_client(const char* server_name, const char* p) {
-    int sockfd;
-    int port = atoi(p);
-    struct sockaddr_in serv_addr;
-    struct hostent *server;
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (sockfd < 0) error("ERROR OPENING SOCKET");
-    server = gethostbyname(server_name);
-    if (server == nullptr) {
-        fprintf(stderr, "NO SUCH HOST");
-        exit(0);
-    }
-    memset(&serv_addr, 0, sizeof(serv_addr));
-    serv_addr.sin_family = AF_INET;
-    memcpy(server->h_addr_list, &serv_addr.sin_addr.s_addr,server->h_length);
-    serv_addr.sin_port = htons(port);
-    if (connect(sockfd, (sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
-        error("ERROR CONNECTING");
-    }
-    return sockfd;
-}
-
 int main(int argc, char* argv[]) {
     if (argc < 3) {
         std::cout << "usage: HOSTNAME PORT\n";
@@ -59,19 +37,13 @@ int main(int argc, char* argv[]) {
     int sockfd, port;
     std::string received;
     struct sockaddr_in serv_addr;
-    struct hostent *server;
 
     port = atoi(argv[2]);
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
     if (sockfd < 0) error("ERROR OPENING SOCKET");
-    server = gethostbyname(argv[1]);
-    if (server == NULL) {
-        error("ERROR, NO SUCH HOST");
-    }
-    memset(&serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
-    memcpy(server->h_addr_list, &serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(port);
+    inet_pton(AF_INET, argv[1], &serv_addr.sin_addr);
     auto move = [&](const Uint8 *keyState) {
         if (keyState[keys[0]]) {
             sending(sockfd, "w");
