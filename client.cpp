@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-//#include "client.hpp"
 #include "functionalClient.hpp"
 
 int main(int argc, char* argv[]) {
@@ -61,7 +60,7 @@ int main(int argc, char* argv[]) {
     };
     std::vector<std::future<void>> myFuture;
     received = "";
-    //client bear(atoi(argv[2]), gethostbyname(argv[1]));
+    
     if (connect(sockfd, (sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) error("ERROR CONNECTING");
     SDL_SetRenderDrawColor(renderTarget, 255,0,0,255);
 
