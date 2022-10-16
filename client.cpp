@@ -84,37 +84,7 @@ int main(int argc, char* argv[]) {
                 
             }
         }
-        /*
-        //receive(sockfd, received, buf);
-        //bear.receive();
-        SDL_RenderClear(renderTarget);
-        //SDL_SetRenderTarget(renderTarget, texture);
-        SDL_RenderCopy(renderTarget, texture, NULL, NULL);
-        //bear.renderAll();
-        renderAll(received, myFuture);
-        SDL_RenderPresent(renderTarget);*/
     }
-    /*
-    memset(buf, 0, 256);
-    std::cout << "PLEASE ENTER THE MESSAGE: ";
-    std::cin >> buf;
-
-    n = write(sockfd, buf, strlen(buf));
-
-    if (n < 0) {
-        error("ERROR WRITING TO SOCKET");
-    }
-
-    memset(buf, 0, 256);
-
-    n = read(sockfd, buf, 255);
-    
-    if (n < 0) {
-        error("ERROR READING FROM SOCKET");
-    }
-
-    std::cout << buf;
-    */
     close(sockfd);
     receivingThread.join();
     SDL_DestroyRenderer(renderTarget);
